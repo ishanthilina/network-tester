@@ -14,8 +14,8 @@ public class ClientApplication {
 
     public static void main(String[] args) {
 
-        String url="10.1.20.41";
-        int port=9990;
+        String url=args[0];
+        int port=Integer.parseInt(args[1]);
 
         //Creating a SocketClient object
         SocketClient client = new SocketClient (url,port);

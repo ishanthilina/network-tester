@@ -19,7 +19,7 @@ public class ServerApplication {
     public static void main(String[] args) {
 
 
-        int portNumber = 9990;
+        int portNumber = Integer.parseInt(args[0]);
 
         try {
             // initializing the Socket Server
