@@ -1,8 +1,12 @@
 package info.ishans.client;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -11,6 +15,7 @@ import java.net.UnknownHostException;
  */
 public class SocketClient {
 
+    private static Logger logger = Logger.getLogger(SocketClient.class);
     private String hostname;
     private int port;
     Socket socketClient;
@@ -20,21 +25,30 @@ public class SocketClient {
         this.port = port;
     }
 
-    public void connect() throws UnknownHostException, IOException {
-        System.out.println("Attempting to connect to "+hostname+":"+port);
-        socketClient = new Socket(hostname,port);
-        System.out.println("Connection Established");
+    public void connect() throws IOException {
+        logger.info("Attempting to connect to "+hostname+":"+port);
+        socketClient = new Socket();
+        socketClient.connect(new InetSocketAddress(hostname,port), 1000);
+        socketClient.setSoTimeout(1000);
+        logger.info("Connection established to "+hostname+":"+port);
     }
 
     public void readResponse() throws IOException{
         String userInput;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
-        System.out.println("Response from server:");
-        while ((userInput = stdIn.readLine()) != null) {
-            System.out.println(userInput);
+        String message=stdIn.readLine();
+        if(message==null){
+           logger.error("Connection Failure "+hostname+":"+port);
+            throw new IOException();
         }
-        System.out.println("client - done");
+        //System.out.println("client - done");
+    }
+
+    public void sendMessage(String message) throws IOException {
+        PrintWriter out =
+                new PrintWriter(socketClient.getOutputStream(), true);
+        out.println(message);
     }
 
 
