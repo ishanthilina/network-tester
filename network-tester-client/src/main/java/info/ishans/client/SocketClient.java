@@ -42,7 +42,6 @@ public class SocketClient {
            logger.error("Connection Failure "+hostname+":"+port);
             throw new IOException();
         }
-        //System.out.println("client - done");
     }
 
     public void sendMessage(String message) throws IOException {

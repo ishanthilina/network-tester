@@ -26,7 +26,6 @@ public class ConnectionHandler extends Thread {
 
         //serves the accepted socket connection forever
         while(true){
-//            System.out.println("Server - connecting");
             BufferedReader in = null;
             try {
                 in = new BufferedReader(new InputStreamReader(
@@ -45,8 +44,6 @@ public class ConnectionHandler extends Thread {
                 PrintWriter out =
                         new PrintWriter(clientSocket.getOutputStream(), true);
                 out.println(message);
-
-//                System.out.println("Server - Ending");
 
             } catch (IOException e) {
                 logger.error("[IOException] "+e.getMessage());

@@ -36,9 +36,6 @@ public class ClientApplication {
 
                         client.readResponse();
 
-//                    System.out.println("Client - done");
-
-
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
