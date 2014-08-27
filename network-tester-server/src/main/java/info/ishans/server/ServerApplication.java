@@ -14,12 +14,17 @@ public class ServerApplication {
 
     private static Logger logger = Logger.getLogger(ServerApplication.class);
 
-    static ArrayList<ConnectionHandler> threads=new ArrayList<ConnectionHandler>();
-
     public static void main(String[] args) {
+
+        if(args.length<1){
+            logger.info("Invalid number of parameters");
+            printUsage();
+            return;
+        }
 
 
         int portNumber = Integer.parseInt(args[0]);
+        int responseInterval=Integer.parseInt(args[1]);
 
         try {
             // initializing the Socket Server
@@ -32,8 +37,7 @@ public class ServerApplication {
                 Socket client = serverSocket.accept();
                 logger.info(client.getInetAddress()+" connected");
 
-                ConnectionHandler connectionHandler = new ConnectionHandler(client);
-                threads.add(connectionHandler);
+                ConnectionHandler connectionHandler = new ConnectionHandler(client,responseInterval);
                 connectionHandler.start();
 
             }
@@ -43,6 +47,11 @@ public class ServerApplication {
             e.printStackTrace();
         }
 
+    }
+
+    private static void printUsage(){
+        System.out.println("Required number of arguments: 1");
+        System.out.println("Argument 1: Port to connect to");
     }
 
 }

@@ -16,9 +16,11 @@ public class ConnectionHandler extends Thread {
     private static Logger logger = Logger.getLogger(ConnectionHandler.class);
 
     Socket clientSocket;
+    int responseInterval;
 
-    public ConnectionHandler(Socket clientSocket) {
+    public ConnectionHandler(Socket clientSocket,int responseInterval) {
         this.clientSocket = clientSocket;
+        this.responseInterval=responseInterval;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ConnectionHandler extends Thread {
                 return;
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(responseInterval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

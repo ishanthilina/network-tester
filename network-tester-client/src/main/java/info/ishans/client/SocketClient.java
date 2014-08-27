@@ -19,21 +19,23 @@ public class SocketClient {
     private String hostname;
     private int port;
     Socket socketClient;
+    int timeout;
 
-    public SocketClient(String hostname, int port){
+    public SocketClient(String hostname, int port,int timeout){
         this.hostname = hostname;
         this.port = port;
+        this.timeout=timeout;
     }
 
     public void connect() throws IOException {
         logger.info("Attempting to connect to "+hostname+":"+port);
         socketClient = new Socket();
-        socketClient.connect(new InetSocketAddress(hostname,port), 1000);
-        socketClient.setSoTimeout(1000);
+        socketClient.connect(new InetSocketAddress(hostname,port), timeout);
+        socketClient.setSoTimeout(timeout);
         logger.info("Connection established to "+hostname+":"+port);
     }
 
-    public void readResponse() throws IOException{
+    public String readResponse() throws IOException{
         String userInput;
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
@@ -42,6 +44,7 @@ public class SocketClient {
            logger.error("Connection Failure "+hostname+":"+port);
             throw new IOException();
         }
+        return message;
     }
 
     public void sendMessage(String message) throws IOException {
