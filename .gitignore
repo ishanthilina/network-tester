@@ -5,6 +5,10 @@ target/
 network-tester-client/target/
 network-tester-client/.idea/
 network-tester-client/dependency-reduced-pom.xml
+network-tester-client/nohup.out
+network-tester-client/.fuse_hidden*
 network-tester-server/target/
 network-tester-server/.idea/
 network-tester-server/dependency-reduced-pom.xml
+network-tester-server/nohup.out
+network-tester-server/.fuse_hidden*
